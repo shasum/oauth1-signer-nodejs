@@ -6,7 +6,7 @@
   "scripts": {
     "test": "mocha && mocha --reporter mocha-sonar-generic-test-coverage > test-results.xml",
     "coverage": "nyc mocha && nyc report --reporter=text-lcov > .nyc_output/coverage.lcov",
-    "build": "browserify src/OAuth.js -o dist/OAuth.js"
+    "build": "browserify src/OAuth.js --standalone OAuth -o dist/OAuth.js"
   },
   "repository": {
     "type": "git",
