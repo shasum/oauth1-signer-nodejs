@@ -142,16 +142,18 @@ OAuth.getBodyHash = function getBodyHash(payload) {
  * @return {String} UUID with dashes removed
  */
 OAuth.getNonce = function getNonce() {
-	const NONCE_LENGTH = 8;
-	const VALID_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+	// const NONCE_LENGTH = 8;
+	// const VALID_CHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
-	const bytes = crypto.randomBytes(NONCE_LENGTH);
-	const value = new Array(NONCE_LENGTH).fill(0);
+	// const bytes = crypto.randomBytes(NONCE_LENGTH);
+	// const value = new Array(NONCE_LENGTH).fill(0);
 
-	return value.reduce((acc, val, i) => {
-		acc.push(VALID_CHARS[bytes[i] % VALID_CHARS.length]);
-		return acc;
-	}, []).join("");
+	// return value.reduce((acc, val, i) => {
+	// 	acc.push(VALID_CHARS[bytes[i] % VALID_CHARS.length]);
+	// 	return acc;
+	// }, []).join("");
+
+	return Math.random().toString(36).slice(2).slice(0,8);
 };
 
 /**
