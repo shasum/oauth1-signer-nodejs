@@ -28352,7 +28352,7 @@ OAuth.signSignatureBaseString = function signSignatureBaseString(sbs, signingKey
 	try {
 		signature = signer.sign(signingKey, "base64");
 	} catch (e) {
-		throw new Error("Unable to sign the signature base string.");
+		throw new Error("Unable to sign the signature base string." + " - " + e.message);
 	}
 
 	return signature;
