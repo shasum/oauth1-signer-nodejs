@@ -131,9 +131,11 @@ OAuth.getBaseUriString = function getBaseUriString(uri) {
  * @return {String} Base64 encoded cryptographic hash of the given payload
  */
 OAuth.getBodyHash = function getBodyHash(payload) {
-	const bodyHash = crypto.createHash(`sha${SHA_BITS}`);
-	bodyHash.update(payload, "utf8");
-	return bodyHash.digest("base64");
+	// const bodyHash = crypto.createHash(`sha${SHA_BITS}`);
+	// bodyHash.update(payload, "utf8");
+	// return bodyHash.digest("base64");
+
+	return CryptoJS.SHA256(payload);
 };
 
 /**
