@@ -1,5 +1,6 @@
 const crypto = require("crypto");
 const url = require("url");
+const jsrsasign = require("jsrsasign");
 
 const EMPTY_STRING = "";
 const SHA_BITS = "256";
@@ -219,12 +220,25 @@ OAuth.getTimestamp = function getTimestamp() {
  * @return {String} RSA signature matching the contents of signature base string
  */
 OAuth.signSignatureBaseString = function signSignatureBaseString(sbs, signingKey) {
-	let signer = crypto.createSign("RSA-SHA256");
-	signer = signer.update(new Buffer(sbs));
+	// let signer = crypto.createSign("RSA-SHA256");
+	// signer = signer.update(new Buffer(sbs));
+
+	// let signature;
+	// try {
+	// 	signature = signer.sign(signingKey, "base64");
+	// } catch (e) {
+	// 	throw new Error("Unable to sign the signature base string." + " - " + e.message);
+	// }
+
+	// return signature;
+
+	let sig = new jsrsasign.KJUR.crypto.Signature({"alg": "SHA256withRSA"});
+	sig.init(signingKey);
+	sig.updateString(sbs);
 
 	let signature;
 	try {
-		signature = signer.sign(signingKey, "base64");
+		signature = sig.sign();
 	} catch (e) {
 		throw new Error("Unable to sign the signature base string." + " - " + e.message);
 	}
