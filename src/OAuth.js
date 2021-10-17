@@ -131,12 +131,9 @@ OAuth.getBaseUriString = function getBaseUriString(uri) {
  * @return {String} Base64 encoded cryptographic hash of the given payload
  */
 OAuth.getBodyHash = function getBodyHash(payload) {
-	console.log(payload);
 	const bodyHash = crypto.createHash(`sha${SHA_BITS}`);
 	bodyHash.update(payload, "utf8");
 	return bodyHash.digest("base64");
-
-	// return CryptoJS.SHA256(payload);
 };
 
 /**
@@ -226,13 +223,14 @@ OAuth.signSignatureBaseString = function signSignatureBaseString(sbs, signingKey
 	// let signer = crypto.createSign("RSA-SHA256");
 	// signer = signer.update(new Buffer(sbs));
 
-	// let signature;
+	// let old_signature;
 	// try {
-	// 	signature = signer.sign(signingKey, "base64");
+	// 	old_signature = signer.sign(signingKey, "base64");
 	// } catch (e) {
 	// 	throw new Error("Unable to sign the signature base string." + " - " + e.message);
 	// }
 
+	// console.log("Old signature -- " + old_signature);
 	// return signature;
 
 	let sig = new jsrsasign.KJUR.crypto.Signature({"alg": "SHA256withRSA"});
@@ -241,11 +239,14 @@ OAuth.signSignatureBaseString = function signSignatureBaseString(sbs, signingKey
 
 	let signature;
 	try {
-		signature = sig.sign();
+		let hex_signature = sig.sign();
+		let buffered_signature = Buffer.from(hex_signature, "hex");
+		signature = buffered_signature.toString("base64");
 	} catch (e) {
 		throw new Error("Unable to sign the signature base string." + " - " + e.message);
 	}
 
+	// console.log("New signature -- " + signature);
 	return signature;
 };
 
